@@ -1,4 +1,11 @@
-window.addEventListener("deviceorientation", handleOrientation, true);
+function WebAudio()
+{
+  this.type = "osc";
+  this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  this.stream = {};
+  this.audioSourceNode = {};
+  this.analyserNode = {};
+}
 function gammaToFreq(gamma) {
   return 440*Math.exp(0.0243*gamma);
 }
@@ -9,10 +16,20 @@ function betaToIntensity(beta) {
   return beta;
 }
 function handleOrientation(event) {
-  document.querySelector("pre").innerHTML =
-  JSON.stringify(
-    { Intensity:betaToIntensity(event.beta),
-      Frequency:Math.round(gammaToFreq(event.gamma))
-    });
-
+  wa.audioSourceNode.frequency.setValueAtTime(
+    gammaToFreq(event.gamma),
+    wa.audioCtx.currentTime);
+  gainNode.gain.setValueAtTime(
+    betaToIntensity(event.beta),
+    wa.audioCtx.currentTime);
 }
+let wa = new WebAudio();
+let gainNode = wa.audioCtx.createGain();
+wa.audioSourceNode = wa.audioCtx.createOscillator();
+wa.audioSourceNode.type = "sine";
+wa.audioSourceNode.frequency.setValueAtTime(440, wa.audioCtx.currentTime);
+gainNode.gain.setValueAtTime(0.5, wa.audioCtx.currentTime);
+wa.audioSourceNode.start();
+wa.audioSourceNode.connect(gainNode);
+gainNode.connect(wa.audioCtx.destination);
+window.addEventListener("deviceorientation", handleOrientation, true);
