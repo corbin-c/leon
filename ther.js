@@ -1,7 +1,13 @@
+import { colortools } from "./colortools.js";
 const A_REFERENCE = 440;
 function waveToColor(frequency,intensity) {
   let pitch = Math.log(frequency/A_REFERENCE)/Math.log(Math.pow(2,1/12));
-  //pitch is given relatively to A440 reference, ie. 49th note on keyboard
+  //pitch is given relatively to A440 reference, ie. 49th note on keyboard  
+  pitch = [Math.abs(pitch % 12),Math.floor(pitch/12)];
+  let out_color = colortools.HSVtoRGB(pitch[0]/12,intensity,pitch[1]/4);
+  document.querySelector("body").setAttribute(
+    "style","background-color: rgb("+out_color.r+","
+    +out_color.g+","+out_color.b+");");
   /*Tone -> H
   * Gain -> S
   * Height (% 8a) -> V
