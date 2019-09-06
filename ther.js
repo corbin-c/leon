@@ -1,9 +1,13 @@
+const A_REFERENCE = 440;
 function waveToColor(frequency,intensity) {
+  let pitch = Math.log(frequency/A_REFERENCE)/Math.log(Math.pow(2,1/12));
+  //pitch is given relatively to A440 reference, ie. 49th note on keyboard
   /*Tone -> H
   * Gain -> S
   * Height (% 8a) -> V
   * -----
   * HSV -> RGB
+  * P = ln(F/Ref)/ln(2^(1/12))
   */
 }
 function WebAudio() {
@@ -14,7 +18,7 @@ function WebAudio() {
   this.analyserNode = {};
 }
 function gammaToFreq(gamma) {
-  return 440*Math.exp(0.0243*gamma);
+  return A_REFERENCE*Math.exp(0.0243*gamma);
 }
 function betaToIntensity(beta) {
   beta = (0.0052*beta + 0.5);
@@ -33,7 +37,8 @@ let wa = new WebAudio();
 let gainNode = wa.audioCtx.createGain();
 wa.audioSourceNode = wa.audioCtx.createOscillator();
 wa.audioSourceNode.type = "sine";
-wa.audioSourceNode.frequency.setValueAtTime(440, wa.audioCtx.currentTime);
+wa.audioSourceNode.frequency.setValueAtTime(
+  A_REFERENCE, wa.audioCtx.currentTime);
 gainNode.gain.setValueAtTime(0.5, wa.audioCtx.currentTime);
 wa.audioSourceNode.start();
 wa.audioSourceNode.connect(gainNode);
