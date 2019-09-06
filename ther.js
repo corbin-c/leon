@@ -1,7 +1,8 @@
 import { colortools } from "./colortools.js";
+import * as NoSleep from "https://richtr.github.io/NoSleep.js/dist/NoSleep.min.js";
 const A_REFERENCE = 440;
 function waveToColor(frequency,intensity) {
-  let pitch = Math.log(frequency/A_REFERENCE)/Math.log(Math.pow(2,1/12));
+  let pitch = 49+Math.log(frequency/A_REFERENCE)/Math.log(Math.pow(2,1/12));
   //pitch is given relatively to A440 reference, ie. 49th note on keyboard  
   pitch = [Math.abs(pitch % 12),Math.floor(pitch/12)];
   let out_color = colortools.HSVtoRGB(pitch[0]/12,intensity,pitch[1]/4);
@@ -50,3 +51,7 @@ wa.audioSourceNode.start();
 wa.audioSourceNode.connect(gainNode);
 gainNode.connect(wa.audioCtx.destination);
 window.addEventListener("deviceorientation", handleOrientation, true);
+document.addEventListener('click', () => {
+  document.removeEventListener('click', enableNoSleep, false);
+  (new NoSleep()).enable();
+}, false);
