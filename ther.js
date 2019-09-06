@@ -1,5 +1,7 @@
-function WebAudio()
-{
+function waveToColor(frequency,intensity) {
+
+}
+function WebAudio() {
   this.type = "osc";
   this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   this.stream = {};
@@ -16,12 +18,11 @@ function betaToIntensity(beta) {
   return beta;
 }
 function handleOrientation(event) {
-  wa.audioSourceNode.frequency.setValueAtTime(
-    gammaToFreq(event.gamma),
-    wa.audioCtx.currentTime);
-  gainNode.gain.setValueAtTime(
-    betaToIntensity(event.beta),
-    wa.audioCtx.currentTime);
+  let f = gammaToFreq(event.gamma);
+  let i = betaToIntensity(event.beta);
+  wa.audioSourceNode.frequency.setValueAtTime(f, wa.audioCtx.currentTime);
+  gainNode.gain.setValueAtTime(i, wa.audioCtx.currentTime);
+  waveToColor(f,i);
 }
 let wa = new WebAudio();
 let gainNode = wa.audioCtx.createGain();
