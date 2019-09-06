@@ -1,5 +1,10 @@
 function waveToColor(frequency,intensity) {
-
+  /*Tone -> H
+  * Gain -> S
+  * Height (% 8a) -> V
+  * -----
+  * HSV -> RGB
+  */
 }
 function WebAudio() {
   this.type = "osc";
