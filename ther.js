@@ -19,10 +19,7 @@ function toFreq(angle) {
   return A_REFERENCE*Math.exp(0.01*angle);
 }
 function toIntensity(angle) {
-  angle = (0.0052*angle + 0.5);
-  angle = (angle < 0.1) ? 0.1:angle;
-  angle = (angle > 0.95) ? 0.95:angle;
-  return angle;
+  return 2*Math.sin(angle*(Math.PI/180)/2)+0.1;
 }
 function handleOrientation(event) {
   let f = toFreq(event.gamma);
