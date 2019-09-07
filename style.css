@@ -5,8 +5,19 @@
 }
 html {
   min-height: 100vh;
+  background: #036487;
 }
 body {
   width: 100%;
   height: 100vh;
+  background: #036487;
+}
+h1 {
+  color: white;
+  font-family: Sans;
+  font-size: 2.5em;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 40%;
 }
