@@ -15,7 +15,7 @@ function handleOrientation(event,webaudio) {
   let i = toIntensity(event.alpha);
   webaudio.audioSourceNode.frequency.setValueAtTime(f,
     webaudio.audioCtx.currentTime);
-  gainNode.gain.setValueAtTime(i, webaudio.audioCtx.currentTime);
+  webaudio.gainNode.gain.setValueAtTime(i, webaudio.audioCtx.currentTime);
   waveToColor(f,i);
 }
 function leon() {
@@ -25,17 +25,18 @@ function leon() {
     audioCtx:new (window.AudioContext || window.webkitAudioContext)(),
     stream:{},
     audioSourceNode:{},
-    analyserNode:{}
+    analyserNode:{},
+    gainNode:{}
   };
-  let gainNode = wa.audioCtx.createGain();
+  wa.gainNode = wa.audioCtx.createGain();
   wa.audioSourceNode = wa.audioCtx.createOscillator();
   wa.audioSourceNode.type = "sine";
   wa.audioSourceNode.frequency.setValueAtTime(
     A_REFERENCE, wa.audioCtx.currentTime);
-  gainNode.gain.setValueAtTime(0.5, wa.audioCtx.currentTime);
+  wa.gainNode.gain.setValueAtTime(0.5, wa.audioCtx.currentTime);
   wa.audioSourceNode.start();
   wa.audioSourceNode.connect(gainNode);
-  gainNode.connect(wa.audioCtx.destination);
+  wa.gainNode.connect(wa.audioCtx.destination);
   window.addEventListener("deviceorientation", function(e) {
     handleOrientation(e,wa)
     }, true);
