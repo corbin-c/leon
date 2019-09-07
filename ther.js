@@ -4,16 +4,9 @@ function waveToColor(frequency,intensity) {
   let pitch = 49+Math.log(frequency/A_REFERENCE)/Math.log(Math.pow(2,1/12));
   //pitch is given relatively to A440 reference, ie. 49th note on keyboard  
   pitch = [Math.abs(pitch % 12),Math.floor(pitch/12)];
-  let out_color = colortools.HSVtoRGB(pitch[0]/12,intensity,pitch[1]/4);
+  let out_color = colortools.HSVtoRGB(pitch[0]/12,pitch[1]/4,intensity);
   document.querySelector("body").setAttribute(
     "style","background-color: "+colortools.toCSS(out_color)+";");
-  /*Tone -> H
-  * Gain -> S
-  * Height (% 8a) -> V
-  * -----
-  * HSV -> RGB
-  * P = ln(F/Ref)/ln(2^(1/12))
-  */
 }
 function WebAudio() {
   this.type = "osc";
@@ -23,7 +16,7 @@ function WebAudio() {
   this.analyserNode = {};
 }
 function toFreq(angle) {
-  return A_REFERENCE*Math.exp(0.0243*angle);
+  return A_REFERENCE*Math.exp(0.01*angle);
 }
 function toIntensity(angle) {
   angle = (0.0052*angle + 0.5);
@@ -32,9 +25,8 @@ function toIntensity(angle) {
   return angle;
 }
 function handleOrientation(event) {
-  console.log(event);
   let f = toFreq(event.gamma);
-  let i = toIntensity(event.beta);
+  let i = toIntensity(event.alpha);
   wa.audioSourceNode.frequency.setValueAtTime(f, wa.audioCtx.currentTime);
   gainNode.gain.setValueAtTime(i, wa.audioCtx.currentTime);
   waveToColor(f,i);
