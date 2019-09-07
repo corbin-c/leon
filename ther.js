@@ -17,20 +17,24 @@ function handleOrientation(event) {
   gainNode.gain.setValueAtTime(i, wa.audioCtx.currentTime);
   waveToColor(f,i);
 }
-let wa = {
-  type:"osc",
-  audioCtx:new (window.AudioContext || window.webkitAudioContext)(),
-  stream:{},
-  audioSourceNode:{},
-  analyserNode:{}
-};
-let gainNode = wa.audioCtx.createGain();
-wa.audioSourceNode = wa.audioCtx.createOscillator();
-wa.audioSourceNode.type = "sine";
-wa.audioSourceNode.frequency.setValueAtTime(
-  A_REFERENCE, wa.audioCtx.currentTime);
-gainNode.gain.setValueAtTime(0.5, wa.audioCtx.currentTime);
-wa.audioSourceNode.start();
-wa.audioSourceNode.connect(gainNode);
-gainNode.connect(wa.audioCtx.destination);
-window.addEventListener("deviceorientation", handleOrientation, true);
+
+document.querySelector("body").addEventListener("click",function leon() {
+  document.querySelector("body").removeEventListener("click",leon);
+  let wa = {
+    type:"osc",
+    audioCtx:new (window.AudioContext || window.webkitAudioContext)(),
+    stream:{},
+    audioSourceNode:{},
+    analyserNode:{}
+  };
+  let gainNode = wa.audioCtx.createGain();
+  wa.audioSourceNode = wa.audioCtx.createOscillator();
+  wa.audioSourceNode.type = "sine";
+  wa.audioSourceNode.frequency.setValueAtTime(
+    A_REFERENCE, wa.audioCtx.currentTime);
+  gainNode.gain.setValueAtTime(0.5, wa.audioCtx.currentTime);
+  wa.audioSourceNode.start();
+  wa.audioSourceNode.connect(gainNode);
+  gainNode.connect(wa.audioCtx.destination);
+  window.addEventListener("deviceorientation", handleOrientation, true);
+},true);
