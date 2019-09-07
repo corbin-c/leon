@@ -16,9 +16,8 @@ function handleOrientation(event) {
   gainNode.gain.setValueAtTime(i, wa.audioCtx.currentTime);
   waveToColor(f,i);
 }
-
-document.querySelector("body").addEventListener("click",function leon() {
-  document.querySelector("body").removeEventListener("click",leon);
+function leon() {
+  document.querySelector("body").removeEventListener("click",leon,true);
   let wa = {
     type:"osc",
     audioCtx:new (window.AudioContext || window.webkitAudioContext)(),
@@ -36,4 +35,5 @@ document.querySelector("body").addEventListener("click",function leon() {
   wa.audioSourceNode.connect(gainNode);
   gainNode.connect(wa.audioCtx.destination);
   window.addEventListener("deviceorientation", handleOrientation, true);
-},true);
+}
+document.querySelector("body").addEventListener("click",leon,true);
