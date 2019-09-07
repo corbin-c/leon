@@ -10,11 +10,12 @@ function waveToColor(frequency,intensity) {
 }
 function toFreq(angle) { return A_REFERENCE*Math.exp(0.01*angle); }
 function toIntensity(angle) { return 2*Math.sin(angle*(Math.PI/180)/2)+0.1; }
-function handleOrientation(event) {
+function handleOrientation(event,webaudio) {
   let f = toFreq(event.gamma);
   let i = toIntensity(event.alpha);
-  wa.audioSourceNode.frequency.setValueAtTime(f, wa.audioCtx.currentTime);
-  gainNode.gain.setValueAtTime(i, wa.audioCtx.currentTime);
+  webaudio.audioSourceNode.frequency.setValueAtTime(f,
+    webaudio.audioCtx.currentTime);
+  gainNode.gain.setValueAtTime(i, webaudio.audioCtx.currentTime);
   waveToColor(f,i);
 }
 function leon() {
@@ -35,6 +36,8 @@ function leon() {
   wa.audioSourceNode.start();
   wa.audioSourceNode.connect(gainNode);
   gainNode.connect(wa.audioCtx.destination);
-  window.addEventListener("deviceorientation", handleOrientation, true);
+  window.addEventListener("deviceorientation", function(e) {
+    handleOrientation(e,wa)
+    }, true);
 }
 document.querySelector("body").addEventListener("click",leon,true);
