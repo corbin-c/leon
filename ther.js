@@ -17,11 +17,11 @@ function handleOrientation(event) {
   waveToColor(f,i);
 }
 let wa = {
-  this.type = "osc";
-  this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  this.stream = {};
-  this.audioSourceNode = {};
-  this.analyserNode = {};
+  type:"osc",
+  audioCtx:new (window.AudioContext || window.webkitAudioContext)(),
+  stream:{},
+  audioSourceNode:{},
+  analyserNode:{}
 };
 let gainNode = wa.audioCtx.createGain();
 wa.audioSourceNode = wa.audioCtx.createOscillator();
