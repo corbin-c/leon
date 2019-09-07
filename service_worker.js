@@ -1,7 +1,8 @@
 self.addEventListener("install", async (event) => {
   event.waitUntil(caches.open("leon")
     .then((e) => e.addAll(["colortools.js","leon.js","index.html","favicon.ico",
-      "style.css","icons/32.png","icons/192.png","icons/512.png","/"])));
+      "icons/32.png","icons/192.png","icons/512.png","manifest.json",
+      "style.css","/"])));
   console.info("Service Worker initialized");
 });
 self.addEventListener("activate", (event) => {
