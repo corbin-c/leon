@@ -35,7 +35,7 @@ function leon() {
     A_REFERENCE, wa.audioCtx.currentTime);
   wa.gainNode.gain.setValueAtTime(0.5, wa.audioCtx.currentTime);
   wa.audioSourceNode.start();
-  wa.audioSourceNode.connect(gainNode);
+  wa.audioSourceNode.connect(wa.gainNode);
   wa.gainNode.connect(wa.audioCtx.destination);
   window.addEventListener("deviceorientation", function(e) {
     handleOrientation(e,wa)
