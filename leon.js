@@ -1,4 +1,4 @@
-navigator.serviceWorker.register("service_worker.js", { scope: "/" });
+navigator.serviceWorker.register("service_worker.js", { scope: "./" });
 import { colortools } from "./colortools.js";
 const A_REFERENCE = 440;
 function waveToColor(frequency,intensity) {
