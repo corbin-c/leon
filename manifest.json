@@ -1,0 +1,22 @@
+{
+  "short_name": "Leon",
+  "name": "Leon | Theremin-like app",
+  "description": "Leon is an app to make music with the orientation sensor of your device",
+  "icons": [
+    {
+      "src": "/icons/192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "#036487",
+  "display": "fullscreen",
+  "scope": "/",
+  "theme_color": "#036487"
+}
