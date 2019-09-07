@@ -1,6 +1,14 @@
-// I am not the author of the following code !
-// Adapted from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
 let colortools = {
+  toCSS:(color) => {
+    let css = ["","("];
+    for (let e in color) {
+      css[0] += e;
+      css[1] += color[e]+","
+    }
+    return css[0]+css[1].slice(0,-1)+")";
+  },
+// I am not the author of the following function !
+// Adapted from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
   HSVtoRGB:(h, s, v) => {
     let r, g, b, i, f, p, q, t;
     i = Math.floor(h * 6);
