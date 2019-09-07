@@ -22,18 +22,19 @@ function WebAudio() {
   this.audioSourceNode = {};
   this.analyserNode = {};
 }
-function gammaToFreq(gamma) {
-  return A_REFERENCE*Math.exp(0.0243*gamma);
+function toFreq(angle) {
+  return A_REFERENCE*Math.exp(0.0243*angle);
 }
-function betaToIntensity(beta) {
-  beta = (0.0052*beta + 0.5);
-  beta = (beta < 0.1) ? 0.1:beta;
-  beta = (beta > 0.95) ? 0.95:beta;
-  return beta;
+function toIntensity(angle) {
+  angle = (0.0052*angle + 0.5);
+  angle = (angle < 0.1) ? 0.1:angle;
+  angle = (angle > 0.95) ? 0.95:angle;
+  return angle;
 }
 function handleOrientation(event) {
-  let f = gammaToFreq(event.gamma);
-  let i = betaToIntensity(event.beta);
+  console.log(event);
+  let f = toFreq(event.gamma);
+  let i = toIntensity(event.beta);
   wa.audioSourceNode.frequency.setValueAtTime(f, wa.audioCtx.currentTime);
   gainNode.gain.setValueAtTime(i, wa.audioCtx.currentTime);
   waveToColor(f,i);
